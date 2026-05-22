@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تسجيل الحضور | عمر وليلى</title>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        background: #f5f0e6;
+        color: #4a443c;
+        min-height: 100vh;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .card {
+        background: #f8f4eb;
+        border: 1.5px solid #c4b8a8;
+        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        padding: 40px 30px;
+        max-width: 500px;
+        width: 100%;
+        margin-top: 30px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+      }
+      h1 {
+        font-family: "Pinyon Script", cursive;
+        font-size: 3rem;
+        margin-bottom: 10px;
+        color: #5a5248;
+      }
+      .subtitle {
+        color: #7a7369;
+        margin-bottom: 25px;
+        font-size: 1rem;
+      }
+      #reader {
+        width: 100%;
+        max-width: 400px;
+        margin: 25px auto;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 2px solid #c4b8a8;
+        background: #000;
+      }
+      #reader video {
+        width: 100% !important;
+        height: auto !important;
+        object-fit: cover;
+      }
+      .scanner-loading {
+        color: #fff;
+        font-size: 0.9rem;
+        opacity: 0.8;
+        padding: 20px;
+      }
+      .scanner-error {
+        color: #fee2e2;
+        background: #991b1b;
+        padding: 10px;
+        border-radius: 8px;
+        margin: 10px 0;
+        font-size: 0.9rem;
+      }
+      .name-form {
+        display: none;
+        margin-top: 20px;
+        animation: slideIn 0.3s ease;
+      }
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .name-form input {
+        width: 100%;
+        padding: 14px;
+        border: 1px solid #c4b8a8;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+        background: #fff;
+        font-family: inherit;
+        text-align: center;
+      }
+      .name-form input:disabled {
+        background: #f0ebe1;
+        color: #7a7369;
+      }
+      .name-form button {
+        width: 100%;
+        padding: 14px;
+        background: #5a5248;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.3s ease;
+        margin-bottom: 8px;
+      }
+      .name-form button:hover:not(:disabled) {
+        background: #4a443c;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(90, 82, 72, 0.3);
+      }
+      .name-form button:disabled {
+        background: #9a9288;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+      .name-form .cancel {
+        background: #7a7369;
+      }
+      .name-form .cancel:hover:not(:disabled) {
+        background: #6a6359;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(122, 115, 105, 0.3);
+      }
+      #result {
+        display: none;
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        font-weight: 600;
+        animation: fadeIn 0.3s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .success {
+        background: #dcfce7;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+      }
+      .error {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+      }
+      .guest-name {
+        font-size: 1.3rem;
+        display: block;
+        margin-top: 5px;
+        font-weight: 700;
+      }
+      .guest-time {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        display: block;
+        margin-top: 3px;
+      }
+      .hint {
+        color: #7a7369;
+        font-size: 0.9rem;
+        margin-top: 20px;
+        line-height: 1.5;
+      }
+      .retry-camera {
+        display: none;
+        margin: 15px auto;
+        padding: 12px 24px;
+        background: #7a7369;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-family: inherit;
+        transition: all 0.3s ease;
+      }
+      .retry-camera:hover {
+        background: #6a6359;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(122, 115, 105, 0.3);
+      }
+      .scanner-controls {
+        margin-top: 15px;
+      }
+      .stop-scan-btn {
+        padding: 12px 30px;
+        background: #5a5248;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-family: inherit;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .stop-scan-btn:hover {
+        background: #4a443c;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(90, 82, 72, 0.3);
+      }
+      .stop-scan-btn:active {
+        transform: translateY(0);
+      }
+      .loading {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 0.8s linear infinite;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .export-link {
+        display: inline-block;
+        margin-top: 25px;
+        padding: 12px 25px;
+        background: transparent;
+        border: 1.5px solid #5a5248;
+        color: #5a5248;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+      .export-link:hover {
+        background: #5a5248;
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(90, 82, 72, 0.2);
+      }
+      @media (max-width: 600px) {
+        .card {
+          padding: 30px 20px;
+          margin-top: 20px;
+        }
+        h1 {
+          font-size: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>تسجيل الحضور</h1>
+      <p class="subtitle">امسح كود الضيف ثم أدخل اسمه</p>
+
+      <div id="reader">
+        <span class="scanner-loading">📷 جاري تشغيل الكاميرا...</span>
+      </div>
+
+      <button id="retryBtn" class="retry-camera">
+        🔄 إعادة تشغيل الكاميرا
+      </button>
+
+      <div class="scanner-controls">
+        <button id="stopScanBtn" class="stop-scan-btn" style="display: none">
+          ⏹ إيقاف المسح
+        </button>
+      </div>
+
+      <div class="name-form" id="nameForm">
+        <input
+          type="text"
+          id="guestName"
+          placeholder="اسم الضيف..."
+          autocomplete="off"
+          autofocus
+        />
+        <button id="submitBtn" onclick="registerGuest()">✅ تسجيل</button>
+        <button class="cancel" onclick="cancelForm()">✕ إلغاء</button>
+      </div>
+
+      <div id="result"></div>
+      <p class="hint">💡 وجّه الكاميرا للكود المعروض على موبايل الضيف</p>
+
+      <!-- ✅ زر فتح جدول الحضور مباشرة (الرابط الصحيح) -->
+      <a
+        href="https://docs.google.com/spreadsheets/d/1kXI8oJU8HmExW2zCn8LYY7OUr1s0VPAP9_dUf6SpIos/edit"
+        target="_blank"
+        class="export-link"
+      >
+        📊 فتح جدول الحضور (Google Sheets)
+      </a>
+    </div>
+
+    <script>
+      const API_BASE = "";
+      const MASTER_CODE = "wedding-2026-checkin";
+      let isProcessing = false,
+        scannedCode = null,
+        html5QrCodeScanner = null,
+        isScanning = false;
+
+      function showResult(type, html) {
+        const el = document.getElementById("result");
+        el.style.display = "block";
+        el.className = type;
+        el.innerHTML = html;
+      }
+
+      function setLoading(button, loading) {
+        if (loading) {
+          button.disabled = true;
+          button.innerHTML = 'جاري الحفظ <span class="loading"></span>';
+        } else {
+          button.disabled = false;
+          button.textContent = "✅ تسجيل";
+        }
+      }
+
+      async function onScanSuccess(code) {
+        if (isProcessing) return;
+        const cleanCode = code.trim();
+        if (
+          cleanCode === scannedCode &&
+          document.getElementById("nameForm").style.display === "block"
+        )
+          return;
+
+        isProcessing = true;
+        scannedCode = cleanCode;
+
+        try {
+          const response = await fetch(`${API_BASE}/api/verify`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code: scannedCode }),
+          });
+          const result = await response.json();
+
+          if (result.success) {
+            document.getElementById("nameForm").style.display = "block";
+            document.getElementById("guestName").focus();
+            showResult("", "");
+            stopScanning();
+          } else {
+            showResult("error", "❌ " + (result.message || "كود غير صالح"));
+            scannedCode = null;
+            setTimeout(() => {
+              isProcessing = false;
+            }, 2000);
+          }
+        } catch (error) {
+          console.error("Verify Error:", error);
+          showResult("error", "⚠️ خطأ في الاتصال بالسيرفر");
+          scannedCode = null;
+          setTimeout(() => {
+            isProcessing = false;
+          }, 2000);
+        }
+      }
+
+      function onScanFailure(error) {
+        /* تجاهل الأخطاء العادية */
+      }
+
+      function initScanner() {
+        const readerEl = document.getElementById("reader");
+        const stopBtn = document.getElementById("stopScanBtn");
+        if (html5QrCodeScanner) html5QrCodeScanner.clear().catch(() => {});
+        readerEl.innerHTML =
+          '<span class="scanner-loading">📷 جاري تشغيل الكاميرا...</span>';
+
+        html5QrCodeScanner = new Html5QrcodeScanner(
+          "reader",
+          {
+            fps: 10,
+            qrbox: { width: 350, height: 350 },
+            rememberLastUsedCamera: true,
+          },
+          false,
+        );
+
+        html5QrCodeScanner
+          .render(onScanSuccess, onScanFailure)
+          .then(() => {
+            isScanning = true;
+            stopBtn.style.display = "inline-flex";
+            const loading = readerEl.querySelector(".scanner-loading");
+            if (loading) loading.style.display = "none";
+          })
+          .catch((err) => {
+            console.error("Scanner Init Error:", err);
+            readerEl.innerHTML =
+              '<span class="scanner-error">❌ تعذر الوصول للكاميرا.<br>تأكد من السماح بالوصول للكاميرا.</span>';
+            document.getElementById("retryBtn").style.display = "inline-block";
+            stopBtn.style.display = "none";
+          });
+      }
+
+      function stopScanning() {
+        if (html5QrCodeScanner && isScanning) {
+          html5QrCodeScanner.pause();
+          isScanning = false;
+          document.getElementById("stopScanBtn").style.display = "none";
+        }
+      }
+
+      function resumeScanning() {
+        if (html5QrCodeScanner && !isScanning) {
+          html5QrCodeScanner.resume();
+          isScanning = true;
+          document.getElementById("stopScanBtn").style.display = "inline-flex";
+        }
+      }
+
+      function retryCamera() {
+        document.getElementById("retryBtn").style.display = "none";
+        initScanner();
+      }
+
+      async function registerGuest() {
+        const nameInput = document.getElementById("guestName");
+        const submitBtn = document.getElementById("submitBtn");
+        const name = nameInput.value.trim();
+
+        if (!name || !scannedCode) {
+          showResult("error", "⚠️ من فضلك أدخل اسم الضيف");
+          nameInput.focus();
+          return;
+        }
+
+        nameInput.disabled = true;
+        setLoading(submitBtn, true);
+        showResult("", "⏳ جاري التسجيل...");
+
+        try {
+          const response = await fetch(`${API_BASE}/api/checkin`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, code: scannedCode }),
+          });
+          const res = await response.json();
+
+          if (res.success) {
+            showResult(
+              "success",
+              `✅ ${res.message}<span class="guest-name">${res.guest.name}</span><span class="guest-time">🕐 ${res.guest.time}</span>`,
+            );
+          } else {
+            showResult(
+              "error",
+              "❌ " + (res.message || "حدث خطأ أثناء التسجيل"),
+            );
+          }
+        } catch (error) {
+          console.error("Check-in Error:", error);
+          showResult("error", "⚠️ فشل الاتصال بالسيرفر.");
+        } finally {
+          setTimeout(() => {
+            document.getElementById("nameForm").style.display = "none";
+            nameInput.value = "";
+            nameInput.disabled = false;
+            setLoading(submitBtn, false);
+            scannedCode = null;
+            isProcessing = false;
+            resumeScanning();
+            setTimeout(() => {
+              document.getElementById("result").style.display = "none";
+            }, 3000);
+          }, 4000);
+        }
+      }
+
+      function cancelForm() {
+        document.getElementById("nameForm").style.display = "none";
+        document.getElementById("result").style.display = "none";
+        document.getElementById("guestName").value = "";
+        document.getElementById("guestName").disabled = false;
+        scannedCode = null;
+        isProcessing = false;
+        resumeScanning();
+      }
+
+      window.addEventListener("load", () => {
+        initScanner();
+        document
+          .getElementById("guestName")
+          .addEventListener("keypress", (e) => {
+            if (e.key === "Enter") registerGuest();
+          });
+        document
+          .getElementById("retryBtn")
+          .addEventListener("click", retryCamera);
+        document
+          .getElementById("stopScanBtn")
+          .addEventListener("click", stopScanning);
+      });
+
+      window.addEventListener("beforeunload", () => {
+        if (html5QrCodeScanner) html5QrCodeScanner.clear().catch(() => {});
+      });
+    </script>
+  </body>
+</html>

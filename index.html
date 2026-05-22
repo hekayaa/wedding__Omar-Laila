@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Omar & Laila | Wedding Invitation</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Pinyon+Script&display=swap"
+      rel="stylesheet"
+    />
+    <!-- GSAP & ScrollTrigger CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  </head>
+  <body>
+    <!-- شاشة الترحيب -->
+    <div id="introOverlay" class="intro-overlay">
+      <div class="infinity">∞</div>
+      <p class="intro-subtitle">YOU HAVE RECEIVED AN INVITATION FROM</p>
+      <h1 class="intro-title">Omar & Laila</h1>
+    </div>
+
+    <!-- محتوى الموقع الأساسي -->
+    <div class="main-content">
+      <!-- Couple Section -->
+      <section class="section card">
+        <!-- ✅ التعديل هنا: إضافة span للسطر التاني عشان ياخد ستايل مختلف -->
+        <p class="top-quote">
+          These two souls<br /><span class="quote-sub">had no idea...</span>
+        </p>
+
+        <!-- ✅ الصورة الجديدة: من غير خلفية، من غير برواز، في النص -->
+        <div class="couple-image-center">
+          <img
+            src="image/together.png"
+            alt="Omar & Laila"
+            class="transparent-couple-img"
+          />
+        </div>
+
+        <h2 class="cursive-title">Omar & Laila</h2>
+        <p class="full-names">OMAR EL SHAZLY & LAILA FAROUK</p>
+        <p class="bottom-quote">...that one day they would exchange rings.</p>
+      </section>
+
+      <!-- Invitation Section -->
+      <section class="section card">
+        <h3 class="cursive-title">Dear Friends</h3>
+        <p class="body-text">
+          Time flies, and we are now ready to say
+          <span class="italic-quote">"yes"</span> to one another.
+        </p>
+        <p class="body-text">
+          We invite you to be part of this long-awaited day.
+        </p>
+        <h4 class="month">May 2026</h4>
+        <div class="calendar">
+          <div class="cal-head">
+            <span>MO</span><span>TU</span><span>WE</span><span>TH</span
+            ><span>FR</span><span>SA</span><span>SU</span>
+          </div>
+          <div class="cal-days">
+            <span></span><span></span><span></span><span></span><span>1</span
+            ><span>2</span><span>3</span> <span>4</span><span>5</span
+            ><span>6</span><span class="active">7</span><span>8</span
+            ><span>9</span><span>10</span> <span>11</span><span>12</span
+            ><span>13</span><span>14</span><span>15</span><span>16</span
+            ><span>17</span> <span>18</span><span>19</span><span>20</span
+            ><span>21</span><span>22</span><span>23</span><span>24</span>
+            <span>25</span><span>26</span><span>27</span><span>28</span
+            ><span>29</span><span>30</span><span>31</span>
+          </div>
+        </div>
+        <p class="caps-small">THE DAY WE SAY YES</p>
+        <p class="caps-bold">WE ARE WAITING FOR YOU</p>
+        <p class="body-text">
+          Four Seasons Hotel<br />Nile Plaza, Cairo<br />Beginning at 16:00
+        </p>
+        <div class="flower-divider"></div>
+      </section>
+
+      <!-- Location Section -->
+      <section class="section card">
+        <p class="caps-small">LOCATION</p>
+        <h3 class="cursive-title">Where we'll meet</h3>
+        <div class="hotel-sketch">
+          <img src="image/hotel.png" alt="Hotel" />
+        </div>
+        <h4 class="cursive-title hotel-name">Four Seasons Hotel</h4>
+        <p class="body-text">
+          NILE PLAZA - CAIRO<br />1089 Corniche El Nil, Garden City
+        </p>
+        <button class="btn-ghost">OPEN MAP</button>
+      </section>
+
+      <!-- Timeline Section -->
+      <section class="section card">
+        <p class="caps-small">WEDDING DAY</p>
+        <h3 class="cursive-title">Plan of the day</h3>
+        <div class="timeline">
+          <div class="t-row left">
+            <div class="t-time">16:00</div>
+            <div class="t-dot"><span>♡</span></div>
+            <div class="t-info">
+              <span class="t-label">GUEST ARRIVAL</span
+              ><span class="t-desc">Welcome drinks</span>
+            </div>
+          </div>
+          <div class="t-row right">
+            <div class="t-time">17:00</div>
+            <div class="t-dot"><span>💍</span></div>
+            <div class="t-info">
+              <span class="t-label">CEREMONY</span
+              ><span class="t-desc">The vows</span>
+            </div>
+          </div>
+          <div class="t-row left">
+            <div class="t-time">19:00</div>
+            <div class="t-dot"><span>🍽️</span></div>
+            <div class="t-info">
+              <span class="t-label">WEDDING DINNER</span
+              ><span class="t-desc">Seated meal</span>
+            </div>
+          </div>
+          <div class="t-row right">
+            <div class="t-time">21:30</div>
+            <div class="t-dot"><span>🎂</span></div>
+            <div class="t-info">
+              <span class="t-label">CAKE & TOAST</span
+              ><span class="t-desc">Sweet moments</span>
+            </div>
+          </div>
+          <div class="t-row left">
+            <div class="t-time">22:00</div>
+            <div class="t-dot"><span>🥂</span></div>
+            <div class="t-info">
+              <span class="t-label">PARTY</span
+              ><span class="t-desc">Dance the night</span>
+            </div>
+          </div>
+          <div class="t-row right">
+            <div class="t-time">01:00</div>
+            <div class="t-dot"><span>✿</span></div>
+            <div class="t-info">
+              <span class="t-label">CONCLUSION</span
+              ><span class="t-desc">Farewell</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dress Code Section -->
+      <section class="section card">
+        <h3 class="cursive-title">Dress code</h3>
+        <p class="body-text">
+          Please wear elegant attire that fits the festive mood.
+        </p>
+        <p class="body-text">
+          We would be delighted if you joined our color palette.
+        </p>
+        <div class="palette">
+          <span class="dot" style="background: #d9d6d1"></span>
+          <span class="dot" style="background: #e2c2c2"></span>
+          <span class="dot" style="background: #b89696"></span>
+          <span class="dot" style="background: #7a6363"></span>
+          <span class="dot" style="background: #3b2e2e"></span>
+        </div>
+      </section>
+
+      <!-- Details Section -->
+      <section class="section card">
+        <h3 class="cursive-title">Details</h3>
+        <p class="body-text">
+          Please note that the format of the celebration does not include a
+          children's area or animators. We kindly ask you to spend this evening
+          without children.
+        </p>
+        <div class="divider">∞</div>
+        <p class="body-text">
+          Instead of bouquets, we would be happy to receive your favorite book
+          for our future family library.
+        </p>
+        <div class="divider">∞</div>
+        <p class="body-text">
+          From the bottom of our hearts we ask you to refrain from shouts of
+          "Bitter!" and to preserve the warm atmosphere of an intimate family
+          celebration.
+        </p>
+      </section>
+
+      <!-- Countdown Section -->
+      <section class="section card">
+        <h3 class="cursive-title">Until our wedding</h3>
+        <div class="countdown">
+          <div class="c-circle">
+            <span id="days">00</span><span class="c-label">DAYS</span>
+          </div>
+          <div class="c-circle">
+            <span id="hours">00</span><span class="c-label">HOURS</span>
+          </div>
+          <div class="c-circle">
+            <span id="minutes">00</span><span class="c-label">MINUTES</span>
+          </div>
+          <div class="c-circle">
+            <span id="seconds">00</span><span class="c-label">SECONDS</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- RSVP Section -->
+      <section class="section card">
+        <h3 class="cursive-title">RSVP</h3>
+        <p class="body-text">
+          Please confirm your attendance by April 1, 2026.
+        </p>
+        <form id="rsvpForm">
+          <label>FULL NAME</label>
+          <input type="text" placeholder="Your Name" required />
+          <p class="q-text">WILL YOU ATTEND?</p>
+          <div class="radio-box">
+            <label
+              ><input type="radio" name="attend" value="yes" /> Yes, with
+              joy</label
+            >
+            <label
+              ><input type="radio" name="attend" value="no" /> Sadly, no</label
+            >
+          </div>
+          <button type="submit" class="btn-ghost">SUBMIT</button>
+        </form>
+      </section>
+
+      <!-- Audio Message Section -->
+      <section class="section card">
+        <p class="caps-small">A MESSAGE FROM US</p>
+        <h3 class="cursive-title">With love</h3>
+        <p class="body-text">
+          Before the big day, we wanted to share a small message with you...
+        </p>
+        <div class="audio-player">
+          <button class="play-btn" id="playBtn">▶</button>
+          <div class="waveform" id="waveform"></div>
+          <div class="a-time">
+            <span id="currentTime">0:00</span>
+            <span class="a-label">voice note</span>
+            <span>6:08</span>
+          </div>
+        </div>
+        <p class="signature">- Omar & Laila</p>
+      </section>
+
+      <!-- Closing Section -->
+      <section class="section card closing">
+        <div class="hands-container">
+          <img
+            src="image/hand.png"
+            alt="Hands with rings"
+            class="hands-image"
+          />
+        </div>
+        <p class="body-text">
+          We are excited to celebrate this special moment<br />with you and
+          create beautiful memories together.
+        </p>
+        <h3 class="cursive-title">Until our wedding day</h3>
+        <div class="divider">∞</div>
+        <p class="signature">Omar & Laila</p>
+        <p class="date-loc">07 . 05 . 2026 — CAIRO</p>
+      </section>
+    </div>
+
+    <!-- ✅ زر الـ QR العائم + النافذة المنبثقة -->
+    <button class="qr-float-btn" id="qrFloatBtn" aria-label="Show QR Code">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+        <rect x="14" y="14" width="3" height="3"></rect>
+        <rect x="18" y="14" width="3" height="3"></rect>
+        <rect x="14" y="18" width="3" height="3"></rect>
+        <rect x="18" y="18" width="3" height="3"></rect>
+      </svg>
+    </button>
+
+    <div class="qr-modal" id="qrModal">
+      <div class="qr-modal-content">
+        <button class="qr-modal-close" id="qrModalClose" aria-label="Close">
+          &times;
+        </button>
+        <h4 class="qr-modal-title">Scan to Visit</h4>
+        <img
+          src="image/master.png"
+          alt="QR Code"
+          class="qr-modal-image"
+          id="qrCodeImage"
+        />
+        <p class="qr-modal-hint">Your key to our special day</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
